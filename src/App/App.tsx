@@ -3,7 +3,7 @@ import 'braid-design-system/reset';
 import { BraidLoadableProvider } from 'braid-design-system';
 import React from 'react';
 
-import { AppHeader } from 'src/components/AppHeader/AppHeader';
+import { Lobby } from './pages/Lobby';
 
 interface AppProps {
   site: string;
@@ -11,6 +11,6 @@ interface AppProps {
 
 export default ({ site }: AppProps) => (
   <BraidLoadableProvider themeName={site}>
-    <AppHeader />
+    <Lobby />
   </BraidLoadableProvider>
 );

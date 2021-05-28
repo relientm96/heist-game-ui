@@ -2,11 +2,9 @@
 import { Stack, TextField, Button } from 'braid-design-system';
 import React, { useState } from 'react';
 
-interface JoinRoomDisplayProps {
-  
-}
+interface JoinRoomDisplayProps {}
 
-export const JoinRoomDisplay = ({ }: JoinRoomDisplayProps) => {
+export const JoinRoomDisplay = ({}: JoinRoomDisplayProps) => {
   const [roomCodeField, setRoomCodeField] = useState<string>('');
   return (
     <Stack space="small">
@@ -17,7 +15,10 @@ export const JoinRoomDisplay = ({ }: JoinRoomDisplayProps) => {
         value={roomCodeField}
         onClear={() => setRoomCodeField('')}
       />
-      <Button id="submitButton" onClick={ () => alert(`Joining room ${roomCodeField}`)}>
+      <Button
+        id="submitButton"
+        onClick={() => alert(`Joining room ${roomCodeField}`)}
+      >
         Submit
       </Button>
     </Stack>

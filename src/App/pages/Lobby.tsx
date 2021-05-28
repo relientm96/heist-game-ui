@@ -9,7 +9,7 @@ import {
 } from 'braid-design-system';
 import React, { useState } from 'react';
 
-import { JoinRoomDisplay } from './JoinRoomDisplay/JoinRoomDisplay';
+import { JoinRoomDisplay } from '../components/JoinRoomDisplay/JoinRoomDisplay';
 
 const url = 'http://localhost:42341';
 
@@ -18,10 +18,13 @@ interface GameRoomProps {
 }
 
 const GameRoomComponent = ({ pinCode }: GameRoomProps) => (
-  <Heading level="3" align="center"> Your Room Code is {pinCode}</Heading>
+  <Heading level="3" align="center">
+    {' '}
+    Your Room Code is {pinCode}
+  </Heading>
 );
 
-export const AppHeader = () => {
+export const Lobby = () => {
   const [roomCode, setRoomCode] = useState<string>('');
   const [isJoinRoom, setIsJoinRoom] = useState<boolean>(false);
   const [isCreateRoom, setIsCreateRoom] = useState<boolean>(false);
@@ -61,7 +64,7 @@ export const AppHeader = () => {
               </Button>
             </Inline>
 
-            {isJoinRoom ? <JoinRoomDisplay/> : null}
+            {isJoinRoom ? <JoinRoomDisplay /> : null}
             {isCreateRoom ? <GameRoomComponent pinCode={roomCode} /> : null}
           </Stack>
         </Stack>
