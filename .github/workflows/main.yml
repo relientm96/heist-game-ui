@@ -1,27 +1,29 @@
-name: Website CD
+name: github pages
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  push: master
+  pull_request: master
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  deploy:
+    runs-on: ubuntu-18.04
     steps:
-      - name: Check out repo
-        uses: actions/checkout@master
-          
-      - name: Set up Node.js 14.x
-        uses: actions/setup-node@master
+      - uses: actions/checkout@v2
         with:
-          node-version: 14.x
+          submodules: true  # Fetch Hugo themes (true OR recursive)
+          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.83.1'
 
-      - name: Deploy Website
-        run: yarn deploy
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build
+        run: hugo --minify
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/main'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
