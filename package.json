@@ -10,7 +10,7 @@
     "serve": "sku serve",
     "lint": "sku lint",
     "format": "sku format",
-    "predeploy": "yarn run build",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
   "husky": {
