@@ -2,13 +2,16 @@
   "name": "heist-game-ui",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://relientm96.github.io/heist-game-ui",
   "scripts": {
     "start": "sku start",
     "test": "sku test",
     "build": "sku build",
     "serve": "sku serve",
     "lint": "sku lint",
-    "format": "sku format"
+    "format": "sku format",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build"
   },
   "husky": {
     "hooks": {
@@ -17,6 +20,7 @@
   },
   "dependencies": {
     "braid-design-system": "29.32.1",
+    "gh-pages": "^3.2.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "sku": "10.13.0"
