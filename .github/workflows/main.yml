@@ -21,8 +21,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Deploy site
-        uses: actions/setup-node@master
+      - name: Deploy Website
+        run: yarn deploy
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn format && yarn lint && yarn deploy
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
