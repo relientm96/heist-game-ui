@@ -1,14 +1,25 @@
-name: Deploying Game UI
-on: [push]
+name: Website CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
 jobs:
   build:
-    name: Deploying Game User Web Interface
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x, 15.x]
+
     steps:
       - uses: actions/checkout@v2
-      - uses: borales/actions-yarn@v2.0.0
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
         with:
-          cmd: predeploy
-      - uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: deploy
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm format
+      - run: npm lint
+      - run: npm run deploy
