@@ -2,16 +2,13 @@ name: Deploying Game UI
 on: [push]
 jobs:
   build:
-    name: Test
+    name: Deploying Game User Web Interface
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: borales/actions-yarn@v2.0.0
         with:
-          cmd: install # will run `yarn install` command
+          cmd: install
       - uses: borales/actions-yarn@v2.0.0
         with:
-          cmd: build # will run `yarn build` command
-      - uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: deploy # will run `yarn test` command
+          cmd: deploy
