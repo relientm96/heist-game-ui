@@ -7,35 +7,65 @@ import {
   Inline,
   Button,
 } from 'braid-design-system';
-import React from 'react';
+import React, { useState } from 'react';
 
-const createRoom = async () => {
-  const url = `http://localhost:42341/game`;
-  const response = await fetch(url, {
-    method: 'POST',
-    body: '',
-  }).catch((err)=>{
-    console.log(err);
-  });
-  console.log(response);
-};
+import { JoinRoomDisplay } from './JoinRoomDisplay/JoinRoomDisplay';
 
-export const AppHeader = () => (
-  <Box background="body" paddingX="small" paddingY={['xlarge', 'xxlarge']}>
-    <ContentBlock>
-      <Stack space="large">
-        <Stack space="large">
-          <Heading align="center" level="1">
-            Adventure Game
-          </Heading>
-          <Inline align="center" space="small">
-            <Button variant="solid" onClick={() => createRoom()}>
-              Create Room
-            </Button>
-            <Button variant="solid">Join Room</Button>
-          </Inline>
-        </Stack>
-      </Stack>
-    </ContentBlock>
-  </Box>
+const url = 'http://localhost:42341';
+
+interface GameRoomProps {
+  pinCode: string;
+}
+
+const GameRoomComponent = ({ pinCode }: GameRoomProps) => (
+  <Heading level="3" align="center"> Your Room Code is {pinCode}</Heading>
 );
+
+export const AppHeader = () => {
+  const [roomCode, setRoomCode] = useState<string>('');
+  const [isJoinRoom, setIsJoinRoom] = useState<boolean>(false);
+  const [isCreateRoom, setIsCreateRoom] = useState<boolean>(false);
+
+  const createRoom = async () => {
+    setIsCreateRoom(true);
+    setIsJoinRoom(false);
+
+    const parsedPinCode = await fetch(`${url}/game`, {
+      method: 'POST',
+      body: '',
+    })
+      .then((r) => r.json())
+      .then((data) => data?.pinCode);
+    setRoomCode(parsedPinCode);
+  };
+
+  const joinRoom = async () => {
+    setIsCreateRoom(false);
+    setIsJoinRoom(true);
+  };
+
+  return (
+    <Box background="body" paddingX="small" paddingY={['xlarge', 'xxlarge']}>
+      <ContentBlock>
+        <Stack space="large" align="center">
+          <Stack space="large">
+            <Heading align="center" level="1">
+              Adventure Game
+            </Heading>
+            <Inline align="center" space="small">
+              <Button variant="solid" onClick={() => createRoom()}>
+                Create Room
+              </Button>
+              <Button variant="solid" onClick={() => joinRoom()}>
+                Join Room
+              </Button>
+            </Inline>
+
+            {isJoinRoom ? <JoinRoomDisplay/> : null}
+            {isCreateRoom ? <GameRoomComponent pinCode={roomCode} /> : null}
+          </Stack>
+        </Stack>
+      </ContentBlock>
+    </Box>
+  );
+};
