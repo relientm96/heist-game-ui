@@ -11,7 +11,7 @@ import React, { useState } from 'react';
 
 import { JoinRoomDisplay } from '../components/JoinRoomDisplay/JoinRoomDisplay';
 
-const url = 'http://localhost:42341';
+const url = 'https://heist-game-server.herokuapp.com';
 
 interface GameRoomProps {
   pinCode: string;
